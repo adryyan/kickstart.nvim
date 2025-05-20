@@ -210,7 +210,14 @@ return {
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        ruff = {
+          init_options = {
+            settings = {
+              logLevel = 'debug',
+              lineLength = 79,
+            },
+          },
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
