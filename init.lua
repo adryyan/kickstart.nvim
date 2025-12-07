@@ -118,6 +118,13 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+-- Expand tabs to spaces
+vim.o.expandtab = true
+
+-- Number of spaces
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -755,6 +762,16 @@ require('lazy').setup({
           end,
         },
       }
+
+      vim.lsp.config('jetls', {
+        cmd = {
+          'jetls',
+          '--threads=auto',
+          '--',
+        },
+        filetypes = { 'julia' },
+      })
+      vim.lsp.enable 'jetls'
     end,
   },
 
