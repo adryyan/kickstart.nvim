@@ -774,10 +774,10 @@ require('lazy').setup({
       vim.lsp.config('jetls', {
         cmd = {
           'jetls',
-          '--threads=auto',
-          '--',
+          'serve',
         },
         filetypes = { 'julia' },
+        root_markers = { 'Project.toml' },
       })
       vim.lsp.enable 'jetls'
     end,
