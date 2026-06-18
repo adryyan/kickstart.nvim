@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -123,6 +123,13 @@ do
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
   vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+
+  -- Expand tabs to spaces
+  vim.o.expandtab = true
+
+  -- Number of spaces
+  vim.o.shiftwidth = 4
+  vim.o.tabstop = 4
 
   -- Enable break indent
   vim.o.breakindent = true
@@ -382,18 +389,19 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
+  vim.pack.add { gh 'catppuccin/nvim' }
   ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
+  require('catppuccin').setup {
+    flavour = 'mocha',
     styles = {
-      comments = { italic = false }, -- Disable italics in comments
+      comments = {}, -- Disable italics in comments
     },
   }
 
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'catppuccin'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -692,7 +700,9 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
+    clangd = {},
+    zls = {},
+    ruff = {},
     -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
@@ -768,6 +778,16 @@ do
     vim.lsp.config(name, server)
     vim.lsp.enable(name)
   end
+
+  vim.lsp.config('jetls', {
+    cmd = {
+      'jetls',
+      'serve',
+    },
+    filetypes = { 'julia' },
+    root_markers = { 'Project.toml' },
+  })
+  vim.lsp.enable 'jetls'
 end
 
 -- ============================================================
@@ -966,17 +986,17 @@ do
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug'
-  -- require 'kickstart.plugins.indent_line'
-  -- require 'kickstart.plugins.lint'
-  -- require 'kickstart.plugins.autopairs'
-  -- require 'kickstart.plugins.neo-tree'
-  -- require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
+  require 'kickstart.plugins.debug'
+  require 'kickstart.plugins.indent_line'
+  require 'kickstart.plugins.lint'
+  require 'kickstart.plugins.autopairs'
+  require 'kickstart.plugins.neo-tree'
+  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  -- require 'custom.plugins'
+  require 'custom.plugins'
 end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
