@@ -1,7 +1,8 @@
-return {
-  'hat0uma/csvview.nvim',
-  ---@module "csvview"
-  ---@type CsvView.Options
+vim.pack.add {
+  { src = 'https://github.com/hat0uma/csvview.nvim', version = vim.version.range '*' },
+}
+
+require('csvview').setup {
   opts = {
     parser = { comments = { '#', '//' } },
     keymaps = {
